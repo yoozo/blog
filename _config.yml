@@ -80,4 +80,3 @@ theme: next
 deploy:
   type: git
   repo: https://github.com/yoozo/yoozo.github.io.git
-  branch: published
