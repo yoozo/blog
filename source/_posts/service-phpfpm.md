@@ -8,18 +8,16 @@ category: 环境配置
 源码安装的php是不带service启动脚本的，要是想用`service php-fpm start`这类命令的话需要自行配置。
 <!-- more -->
 
-前提
-========================
+## 前提
  - php源码安装的目录为***/usr/local/php72***
  - php-fpm.conf里的`pid = run/php-fpm.pid`这句代码没被注释，如果被注释先去掉前面的分号`;`
 
-添加php-fpm系统服务
-========================
-新建php-fpm文件
------------------------
+## 添加php-fpm系统服务
+
+### 新建php-fpm文件
+
 新建文件：***/etc/init.d/php-fpm*** ，添加以下代码
 >注意:代码中的`PHPDIR`，请修改为自己的php源码安装的目录
-
     #! /bin/sh
     # Comments to support chkconfig on CentOS
     # chkconfig: 2345 65 37
@@ -80,12 +78,10 @@ category: 环境配置
             ;;
     esac
 
-添加可执行权限
-----------------------------------
+### 添加可执行权限
 `chmod +x /etc/init.d/php-fpm`
 
-结束语
-==================================
+## 结束语
 至此，已经可以用一下命令来开启php-fpm了
 开机启动：`chkconfig php-fpm on`
 启动服务：`service php-fpm start`
