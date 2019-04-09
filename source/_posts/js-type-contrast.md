@@ -1,12 +1,14 @@
 ---
 title: js类型比较
-tags: 
- - ES6
- - javascript
+tags:
+  - ES6
+  - javascript
 category: javascript
+date: 2019-04-09 22:58:51
 ---
 
 
+比较数据类型做比较的三种方法typeof\instanceof\Object.prototype.toString.call()
 <!-- more -->
 
 ## javascript七大类型
@@ -19,8 +21,26 @@ javascript的数据类型分为两类：原始类型和对象类型。
 
 ## typeof操作符获取类型
 typeof 返回值有 `object\boolean\undefined\number\string\symbol\function`
- - 可以简单获取到上述返回类型
- - 但是不可以判断null，也不可以获取到具体的类型
+ - 确定不可以判断null，也不可以获取到具体的类型
+
+```js
+console.log(typeof 42);
+// expected output: "number"
+
+console.log(typeof 'blubber');
+// expected output: "string"
+
+console.log(typeof true);
+// expected output: "boolean"
+
+console.log(typeof declaredButUndefinedVariable);
+// expected output: "undefined";
+
+let aa = null;
+console.log(typeof aa);
+// expected output: "object"
+
+```
 
 ## instanceof操作符
 instanceof 运算符用来检测 constructor.prototype 是否存在于参数 object 的原型链上。 
@@ -57,3 +77,12 @@ o3 instanceof C; // true 因为C.prototype现在在o3的原型链上
 - 缺点：无法确定原始类型是否是[原始类型](#原始类型（6个）)
 
 ## 通过Object.prototype.toString.call()判断类型
+这种判断算是比较靠谱的，可以判断出数据的七大类型以及内置对象（Date\Json等）
+```js
+Object.prototype.toString.call(null); // "[object Null]"
+Object.prototype.toString.call(undefined); // "[object Undefined]"
+Object.prototype.toString.call(“abc”);// "[object String]"
+Object.prototype.toString.call(123);// "[object Number]"
+Object.prototype.toString.call(true);// "[object Boolean]"
+Object.prototype.toString.call(Symbol());// "[object Symbol]"
+```
