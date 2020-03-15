@@ -5,6 +5,13 @@
   "hexo": {
     "version": "3.9.0"
   },
+  "scripts": {
+    "dev": "npx hexo server --draft",
+    "new": "npx hexo new",
+    "publish": "npx hexo publish",
+    "clean": "npx hexo clean",
+    "deploy": "npx hexo clean && npx hexo deploy"
+  },
   "dependencies": {
     "hexo": "^3.9.0",
     "hexo-deployer-git": "^1.0.0",
