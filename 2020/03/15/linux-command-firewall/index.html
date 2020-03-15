@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="Yoozo&#39;s Blog">
 <meta property="og:description" content="firewall-cmd管理防火墙常用到的配置 状态选项12345--state                   返回并打印防火墙状态--reload                  重新加载防火墙并保留状态信息--check-config            检查永久配置是否有错误--list-all-zones          列出为所有区域添加或启用的所有内容--list-all">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-15T04:54:41.642Z">
+<meta property="og:updated_time" content="2020-03-15T08:41:26.351Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux命令 - firewall-cmd修改防火墙配置">
 <meta name="twitter:description" content="firewall-cmd管理防火墙常用到的配置 状态选项12345--state                   返回并打印防火墙状态--reload                  重新加载防火墙并保留状态信息--check-config            检查永久配置是否有错误--list-all-zones          列出为所有区域添加或启用的所有内容--list-all">
@@ -367,7 +367,7 @@
                 
               
 
-              <time title="创建时间：2020-03-15 12:53:09 / 修改时间：12:54:41" itemprop="dateCreated datePublished" datetime="2020-03-15T12:53:09+08:00">2020-03-15</time>
+              <time title="创建时间：2020-03-15 12:53:09 / 修改时间：16:41:26" itemprop="dateCreated datePublished" datetime="2020-03-15T12:53:09+08:00">2020-03-15</time>
             
 
             
@@ -435,7 +435,7 @@
 <h2 id="状态选项"><a href="#状态选项" class="headerlink" title="状态选项"></a>状态选项</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">--state                   返回并打印防火墙状态</span><br><span class="line">--reload                  重新加载防火墙并保留状态信息</span><br><span class="line">--check-config            检查永久配置是否有错误</span><br><span class="line">--list-all-zones          列出为所有区域添加或启用的所有内容</span><br><span class="line">--list-all                列出为当前所在区域添加或启用的所有内容</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <p>例子：重启防火墙<code>firewall-cmd --reload</code></p>
-<h2 id="配置选项"><a href="#配置选项" class="headerlink" title="配置选项"></a>配置选项</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">--permanent                                     设置一个永久选项</span><br><span class="line">--add-port=&lt;portid&gt;[-&lt;portid&gt;]/&lt;protocol&gt;       配置允许通过的端口</span><br><span class="line">--add-service=service                           配置允许通过的服务</span><br></pre></td></tr></table></figure>
+<h2 id="配置选项"><a href="#配置选项" class="headerlink" title="配置选项"></a>配置选项</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">--permanent                                     设置一个永久选项</span><br><span class="line">--add-port=&lt;portid&gt;[-&lt;portid&gt;]/&lt;protocol&gt;       配置允许通过的端口</span><br><span class="line">--add-service=service                           配置允许通过的服务</span><br><span class="line">--add-masquerade                                开启 IPv4 伪装。备注：docker 容器之间网络不通，需要开启ip伪装才能联通</span><br></pre></td></tr></table></figure>
 <p>例子：配置一个永久允许通过的端口3306<code>firewall-cmd --permanent --add-port=3306/tcp</code></p>
 
       
