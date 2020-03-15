@@ -6,11 +6,11 @@ category: 环境配置
 ---
 
 源码安装的php是不带service启动脚本的，要是想用`service php-fpm start`这类命令的话需要自行配置。
-<!-- more -->
 
 ## 前提
  - php源码安装的目录为***/usr/local/php72***
  - php-fpm.conf里的`pid = run/php-fpm.pid`这句代码没被注释，如果被注释先去掉前面的分号`;`
+<!-- more -->
 
 ## 添加php-fpm系统服务
 
