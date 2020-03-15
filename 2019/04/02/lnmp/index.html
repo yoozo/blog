@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="如何在centos7.3 下搭建好php的web开发环境 yum安装nginx最新稳定版本配置nginx yum存储库创建/etc/yum.repos.d/nginx.repo 文件，添加以下代码12345[nginx]name=nginx repobaseurl=http://nginx.org/packages/OS/OSRELEASE/$basearch/gpgcheck=0enabled=">
+<meta name="keywords" content="php,mysql,nginx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="centos7.3下搭建 lnmp 环境">
+<meta property="og:url" content="https://yoozo.github.io/2019/04/02/lnmp/index.html">
+<meta property="og:site_name" content="Yoozo&#39;s Blog">
+<meta property="og:description" content="如何在centos7.3 下搭建好php的web开发环境 yum安装nginx最新稳定版本配置nginx yum存储库创建/etc/yum.repos.d/nginx.repo 文件，添加以下代码12345[nginx]name=nginx repobaseurl=http://nginx.org/packages/OS/OSRELEASE/$basearch/gpgcheck=0enabled=">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://yoozo.github.io/images/1783506500.png">
+<meta property="og:updated_time" content="2020-03-14T16:17:53.436Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="centos7.3下搭建 lnmp 环境">
+<meta name="twitter:description" content="如何在centos7.3 下搭建好php的web开发环境 yum安装nginx最新稳定版本配置nginx yum存储库创建/etc/yum.repos.d/nginx.repo 文件，添加以下代码12345[nginx]name=nginx repobaseurl=http://nginx.org/packages/OS/OSRELEASE/$basearch/gpgcheck=0enabled=">
+<meta name="twitter:image" content="https://yoozo.github.io/images/1783506500.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://yoozo.github.io/2019/04/02/lnmp/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>centos7.3下搭建 lnmp 环境 | Yoozo's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Yoozo's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yoozo.github.io/2019/04/02/lnmp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yoozo">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yoozo's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">centos7.3下搭建 lnmp 环境
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-02 22:52:25" itemprop="dateCreated datePublished" datetime="2019-04-02T22:52:25+08:00">2019-04-02</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-03-15 00:17:53" itemprop="dateModified" datetime="2020-03-15T00:17:53+08:00">2020-03-15</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/环境配置/" itemprop="url" rel="index"><span itemprop="name">环境配置</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>如何在centos7.3 下搭建好php的web开发环境</p>
+<h2 id="yum安装nginx最新稳定版本"><a href="#yum安装nginx最新稳定版本" class="headerlink" title="yum安装nginx最新稳定版本"></a>yum安装nginx最新稳定版本</h2><h3 id="配置nginx-yum存储库"><a href="#配置nginx-yum存储库" class="headerlink" title="配置nginx yum存储库"></a>配置nginx yum存储库</h3><p>创建/etc/yum.repos.d/nginx.repo 文件，添加以下代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[nginx]</span><br><span class="line">name=nginx repo</span><br><span class="line">baseurl=http://nginx.org/packages/OS/OSRELEASE/$basearch/</span><br><span class="line">gpgcheck=0</span><br><span class="line">enabled=1</span><br></pre></td></tr></table></figure></p>
+ <a id="more"></a>
+<p>然后还要修改baseurl参数</p>
+<blockquote>
+<p>OS: rhel 或 centos<br>OSRELEASE: 6 或 7</p>
+</blockquote>
+<p>因为我现在的系统是centos7.3所以要将baseurl修改为<code>http://nginx.org/packages/centos/7/$basearch/</code>，修改后<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[nginx]</span><br><span class="line">name=nginx repo</span><br><span class="line">baseurl=http://nginx.org/packages/centos/7/$basearch/</span><br><span class="line">gpgcheck=0</span><br><span class="line">enabled=1</span><br></pre></td></tr></table></figure></p>
+<h3 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h3><p>通过以下命令安装nginx，运行命令 <code>yum install nginx</code></p>
+<h3 id="开启nginx服务"><a href="#开启nginx服务" class="headerlink" title="开启nginx服务"></a>开启nginx服务</h3><p>使用以下命令启动nginx <code>service nginx start</code></p>
+<p>您可以使用以下命令检查nginx的状态 <code>service nginx status</code></p>
+<h2 id="yum安装MySQL5-7最新版本"><a href="#yum安装MySQL5-7最新版本" class="headerlink" title="yum安装MySQL5.7最新版本"></a>yum安装MySQL5.7最新版本</h2><p>参考资料:<a href="https://dev.mysql.com/doc/refman/5.7/en/linux-installation-yum-repo.html" target="_blank" rel="noopener">mysql官方文档</a></p>
+<h3 id="配置MySQL-yum存储库"><a href="#配置MySQL-yum存储库" class="headerlink" title="配置MySQL yum存储库"></a>配置MySQL yum存储库</h3><ol>
+<li>转至MySQL开发人员专区中的“<a href="http://dev.mysql.com/downloads/repo/yum/" target="_blank" rel="noopener">下载MySQL Yum存储库</a>”页面。</li>
+<li>选择并下载适用于您的平台的发行，这里我们选择<strong>Red Hat Enterprise Linux 7 / Oracle Linux 7 (Architecture Independent), RPM Package</strong>，点击<strong>Download</strong>。</li>
+<li>在下载页面获取下载地址。<br><img src="/images/1783506500.png" alt="copy_url.png"> <blockquote>
+<p>这里我获取到的地址是<code>https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm</code></p>
+</blockquote>
+</li>
+<li>使用以下命令安装下载的发行包，替换 <strong>platform-and-version-specific-package-name</strong> 为下载的RPM包的名称：<br> yum localinstall platform-and-version-specific-package-name.rpm<blockquote>
+<p>按照以上步骤，最终要运行的<code>yum localinstall https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm</code></p>
+</blockquote>
+</li>
+</ol>
+<h3 id="安装MySQL"><a href="#安装MySQL" class="headerlink" title="安装MySQL"></a>安装MySQL</h3><p>通过以下命令安装MySQL <code>yum install mysql-community-server</code></p>
+<h3 id="启动MySQL服务"><a href="#启动MySQL服务" class="headerlink" title="启动MySQL服务"></a>启动MySQL服务</h3><p>使用以下命令启动MySQL服务 <code>service mysqld start</code></p>
+<p>您可以使用以下命令检查MySQL服务的状态 <code>service mysqld status</code></p>
+<h2 id="php7-2源码安装"><a href="#php7-2源码安装" class="headerlink" title="php7.2源码安装"></a>php7.2源码安装</h2><p>如果需要yum安装的可以看 <a href="https://webtatic.com/" target="_blank" rel="noopener">这里</a></p>
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>去<a href="http://php.net/downloads.php" target="_blank" rel="noopener">php官网</a>下载php-7.2.1.tar.gz，然后把压缩包放在/home目录下，并解压到当前目录下。<br>解压php-7.2.1.tar.gz</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /home</span><br><span class="line">tar zxvf php-7.2.1.tar.gz</span><br></pre></td></tr></table></figure>
+<h2 id="编译安装"><a href="#编译安装" class="headerlink" title="编译安装"></a>编译安装</h2><p>以下命令默认在解压后的目录文件中操作</p>
+<blockquote>
+<p><code>cd /home/php-7.2.1</code></p>
+</blockquote>
+<ol>
+<li><p>修改编译配置<em>configure</em>，我这里选择的配置如下</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">./configure \</span><br><span class="line">--prefix=/usr/local/php72 \</span><br><span class="line">--enable-fpm \</span><br><span class="line">--with-curl \</span><br><span class="line">--with-freetype-dir \</span><br><span class="line">--with-gd \</span><br><span class="line">--with-gettext \</span><br><span class="line">--with-iconv-dir \</span><br><span class="line">--with-kerberos \</span><br><span class="line">--with-libdir=lib64 \</span><br><span class="line">--with-libxml-dir \</span><br><span class="line">--with-mysqli \</span><br><span class="line">--with-openssl \</span><br><span class="line">--with-pcre-regex \</span><br><span class="line">--with-pdo-mysql \</span><br><span class="line">--with-pdo-sqlite \</span><br><span class="line">--with-pear \</span><br><span class="line">--with-png-dir \</span><br><span class="line">--with-xmlrpc \</span><br><span class="line">--with-xsl \</span><br><span class="line">--with-zlib \</span><br><span class="line">--enable-bcmath \</span><br><span class="line">--enable-libxml \</span><br><span class="line">--enable-inline-optimization \</span><br><span class="line">--enable-mbregex \</span><br><span class="line">--enable-mbstring \</span><br><span class="line">--enable-opcache \</span><br><span class="line">--enable-pcntl \</span><br><span class="line">--enable-shmop \</span><br><span class="line">--enable-soap \</span><br><span class="line">--enable-sockets \</span><br><span class="line">--enable-sysvsem \</span><br><span class="line">--enable-xml \</span><br><span class="line">--enable-zip</span><br></pre></td></tr></table></figure>
+<p>因为要在nginx下运行，所以配置要默认编译生成php-fpm，所以需要 <code>--enable-fpm</code><br>另外我希望将php7.2相关的文件放在 <strong>/usr/local/php72</strong> 目录下<code>--prefix=/usr/local/php72</code><br>其他配置可以根据需要进行选择，查看配置帮助 <code>./configure --help</code></p>
+</li>
+<li><p>配置完成之后就可以进行编译和安装了</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<p>安装成功后会多了 <strong>/usr/local/php72</strong></p>
+</li>
+<li><p>创建软连接</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#为php-fpm创建软连接</span></span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/php72/sbin/php-fpm /usr/<span class="built_in">local</span>/sbin/php-fpm</span><br><span class="line"><span class="comment">#为php创建软连接</span></span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/php72/bin/php /usr/<span class="built_in">local</span>/bin/php</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建php-fpm服务<br>为了更加方便操作php-fpm，创建服务可以看 <a href="http://www.yoozo.xin/archives/16.html" target="_blank" rel="noopener">这里</a></p>
+</li>
+</ol>
+<h2 id="构建lnmp"><a href="#构建lnmp" class="headerlink" title="构建lnmp"></a>构建lnmp</h2><p>根据前面的步骤安装好所有需要的软件之后就可以</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/php/" rel="tag"># php</a>
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+            <a href="/tags/nginx/" rel="tag"># nginx</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/02/service-phpfpm/" rel="prev" title="将php-fpm加入服务">
+                将php-fpm加入服务 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Yoozo</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#yum安装nginx最新稳定版本"><span class="nav-number">1.</span> <span class="nav-text">yum安装nginx最新稳定版本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置nginx-yum存储库"><span class="nav-number">1.1.</span> <span class="nav-text">配置nginx yum存储库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装nginx"><span class="nav-number">1.2.</span> <span class="nav-text">安装nginx</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开启nginx服务"><span class="nav-number">1.3.</span> <span class="nav-text">开启nginx服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yum安装MySQL5-7最新版本"><span class="nav-number">2.</span> <span class="nav-text">yum安装MySQL5.7最新版本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置MySQL-yum存储库"><span class="nav-number">2.1.</span> <span class="nav-text">配置MySQL yum存储库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装MySQL"><span class="nav-number">2.2.</span> <span class="nav-text">安装MySQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动MySQL服务"><span class="nav-number">2.3.</span> <span class="nav-text">启动MySQL服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#php7-2源码安装"><span class="nav-number">3.</span> <span class="nav-text">php7.2源码安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备工作"><span class="nav-number">3.1.</span> <span class="nav-text">准备工作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译安装"><span class="nav-number">4.</span> <span class="nav-text">编译安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建lnmp"><span class="nav-number">5.</span> <span class="nav-text">构建lnmp</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yoozo</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.1.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
