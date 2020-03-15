@@ -27,5 +27,6 @@ firewall-cmd管理防火墙常用到的配置
 --permanent                                     设置一个永久选项
 --add-port=<portid>[-<portid>]/<protocol>       配置允许通过的端口
 --add-service=service                           配置允许通过的服务
+--add-masquerade                                开启 IPv4 伪装。备注：docker 容器之间网络不通，需要开启ip伪装才能联通
 ```
 例子：配置一个永久允许通过的端口3306`firewall-cmd --permanent --add-port=3306/tcp`
