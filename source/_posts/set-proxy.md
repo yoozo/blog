@@ -11,7 +11,6 @@ date: 2019-04-03 23:14:47
 ---
 
 因为众所周知的原因，很多开发工具需要代理才能正常使用。
-<!-- more -->
 
 ## Git
 ### 设置代理
@@ -21,6 +20,7 @@ git config --global http.proxy http://127.0.0.1:1080
 git config --global http.proxy socks5://127.0.0.1:1080
 git config --global https.proxy socks5://127.0.0.1:1080
 ```
+<!-- more -->
 
 ### 取消代理 
 ```bash

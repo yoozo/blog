@@ -9,7 +9,6 @@ category: 环境配置
 ---
 
 如何在centos7.3 下搭建好php的web开发环境
- <!-- more -->
 
 ## yum安装nginx最新稳定版本
 
@@ -22,6 +21,7 @@ category: 环境配置
     gpgcheck=0
     enabled=1
 ```
+ <!-- more -->
 
 然后还要修改baseurl参数
  >OS: rhel 或 centos

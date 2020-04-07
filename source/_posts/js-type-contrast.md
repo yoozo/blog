@@ -9,7 +9,6 @@ date: 2019-04-09 22:58:51
 
 
 比较数据类型做比较的三种方法typeof\instanceof\Object.prototype.toString.call()
-<!-- more -->
 
 ## javascript七大类型
 javascript的数据类型分为两类：原始类型和对象类型。   
@@ -18,6 +17,7 @@ javascript的数据类型分为两类：原始类型和对象类型。
   两个特殊原始值：空（null）、未定义（undefined）
 ### 对象类型（object）   
   每个属性都由 &lt;key:value&gt;构成，value可以是任意类型（包括对象类型）
+<!-- more -->
 
 ## typeof操作符获取类型
 typeof 返回值有 `object\boolean\undefined\number\string\symbol\function`
