@@ -10,7 +10,8 @@
     "new": "npx hexo new",
     "publish": "npx hexo publish",
     "clean": "npx hexo clean",
-    "deploy": "npx hexo clean && npx hexo deploy"
+    "deploy": "npx hexo clean && npx hexo deploy",
+    "init": "git submodule init && git submodule update && npm install"
   },
   "dependencies": {
     "hexo": "^3.9.0",
