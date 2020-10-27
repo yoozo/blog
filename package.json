@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "npx hexo server --draft",
     "new": "npx hexo new",
+    "draft": "npx hexo new draft",
     "publish": "npx hexo publish",
     "clean": "npx hexo clean",
     "deploy": "npx hexo clean && npx hexo deploy",
